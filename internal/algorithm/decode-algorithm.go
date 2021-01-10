@@ -5,7 +5,7 @@ import "errors"
 /*ProcessMessages decode incomplete messages base on several collections of the same message
 [Required]  array lenght> 1
 */
-func ProcessMessages(msg ...[]string) (string, error) {
+func ProcessMessages(msg [][]string) (string, error) {
 	if len(msg) < 2 {
 		return "", errors.New("Expected array lenght to be > 1 is required")
 	}
