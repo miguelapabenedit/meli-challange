@@ -21,6 +21,6 @@ func main() {
 	r.HandleFunc("/topsecret_split/{satellite}", satelliteController.PostSatelliteMessage).Methods(http.MethodPost)
 	r.HandleFunc("/topsecret_split/", satelliteController.GetTransmition).Methods(http.MethodGet)
 	r.HandleFunc("/topsecret/order/66", satelliteController.ExecuteOrder).Methods(http.MethodDelete)
-	log.Println("Running up")
-	log.Fatalln(http.ListenAndServe(":5000", r))
+	log.Printf("Running up on port: %s", port)
+	log.Fatalln(http.ListenAndServe(":"+port, r))
 }
