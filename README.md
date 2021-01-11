@@ -35,4 +35,11 @@ http://localhost:8080/swagger/index.html
  ./Dockerfile.web -- Heroku setting
  ```
 
+### Comentarios Generales
 
+ Para el algoritmo de trilateración la teoría la saque de este articulo 
+ Para el algoritmo de Decode de mensaje, le falta contemplar :
+  si un array de mensaje da información falsa
+  contemplar defasajes en el final.
+  
+Con el tiempo que tenía dedicado logre completar lo que se encuentra en el momento e intente adoptar una nuevo template de estructura del projecto para este desafio, muchas gracias por el tiempo brindado
