@@ -31,10 +31,10 @@ func main() {
 	r.HandleFunc("/topsecret_split/", satelliteController.GetTransmition).Methods(http.MethodGet)
 	r.HandleFunc("/topsecret/order/66", satelliteController.ExecuteOrder).Methods(http.MethodDelete)
 
-	docs.SwaggerInfo.Host = host + ":" + port
+	docs.SwaggerInfo.Host = host
 	docs.SwaggerInfo.Schemes = []string{"https", "http"}
 	r.PathPrefix("/swagger").Handler(httpSwagger.WrapHandler)
 
-	log.Printf("Running up on host:%s port: %s", host, port)
+	log.Printf("Running up on host:%s", host)
 	log.Fatalln(http.ListenAndServe(":"+port, r))
 }

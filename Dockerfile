@@ -9,7 +9,7 @@ RUN go mod download
 COPY . .
 
 ENV PORT=5000
-ENV HOST="localhost"
+ENV HOST="localhost:5000"
 
 RUN go build ./main.go
 
