@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/gorilla/mux"
 	"github.com/miguelapabenedit/meli-challange/pkg/controller"
@@ -10,7 +11,8 @@ import (
 )
 
 var (
-	satelliteController = controller.NewSatelliteController(service.NewSatelliteService())
+	satelliteController        = controller.NewSatelliteController(service.NewSatelliteService())
+	port                string = os.Getenv("PORT")
 )
 
 func main() {
