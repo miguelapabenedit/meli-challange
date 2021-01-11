@@ -36,5 +36,5 @@ func main() {
 	r.PathPrefix("/swagger").Handler(httpSwagger.WrapHandler)
 
 	log.Printf("Running up on host:%s port: %s", host, port)
-	log.Fatalln(http.ListenAndServe(port, r))
+	log.Fatalln(http.ListenAndServe(":"+port, r))
 }
