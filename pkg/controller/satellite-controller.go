@@ -21,6 +21,18 @@ func NewSatelliteController(satelliteService service.Service) Controller {
 	return &controller{}
 }
 
+// BatchPostSatellitesMessage godoc
+// @Summary Process a Batch of incoming satellites transmitions update
+// @ID post-batch
+// @Description returns the position and message of a given transmitter
+// @Tags branch
+// @Accept json
+// @Produce  json
+// @Param branch body []entity.Satellite true "Satellite"
+// @Success 200 {object} entity.TransmitionResponse
+// @Failure 400,404 {string} string "Bad Request"
+// @Failure 500 {string} string "Internal Server error"
+// @Router /topsecret/ [post]
 func (controller) BatchPostSatellitesMessage(w http.ResponseWriter, r *http.Request) {
 	var satellites []entity.Satellite
 	bodyBytes, err := ioutil.ReadAll(r.Body)
@@ -59,6 +71,19 @@ func (controller) BatchPostSatellitesMessage(w http.ResponseWriter, r *http.Requ
 	return
 }
 
+// PostSatelliteMessage godoc
+// @Summary Updates a Satellite transmition data
+// @ID post-satellite-message
+// @Description updates a Satellite transmition data base on the
+// @Tags branch
+// @Accept json
+// @Produce  json
+// @Param satellite path string true "Satellite Name"
+// @Param branch body []entity.Satellite true "Satellite"
+// @Success 200
+// @Failure 400,404 {string} string "Bad Request"
+// @Failure 500 {string} string "Internal Server error"
+// @Router /topsecret_split/{satellite} [post]
 func (controller) PostSatelliteMessage(w http.ResponseWriter, r *http.Request) {
 	urlPathSegment := strings.Split(r.URL.Path, "/")
 	satelliteName := urlPathSegment[len(urlPathSegment)-1]
@@ -89,6 +114,17 @@ func (controller) PostSatelliteMessage(w http.ResponseWriter, r *http.Request) {
 	return
 }
 
+// GetTransmition godoc
+// @Summary Try to retrieve the position and message of the transmition
+// @ID get-transmition
+// @Description Retrieves the information of the satellites base on tu current data
+// @Tags branch
+// @Accept json
+// @Produce  json
+// @Success 200 {object} entity.TransmitionResponse
+// @Failure 404 {string} string "Not Found"
+// @Failure 500 {string} string "Internal Server error"
+// @Router /topsecret_split/ [get]
 func (controller) GetTransmition(w http.ResponseWriter, r *http.Request) {
 	position, msg, err := serv.GetTransmition()
 
@@ -114,6 +150,15 @@ func (controller) GetTransmition(w http.ResponseWriter, r *http.Request) {
 	return
 }
 
+// ExecuteOrder godoc
+// @Summary Executes the holy command to erase existing transmition
+// @ID execute-order
+// @Description deletes all the distances and messages from the satellites, for a fresh start.
+// @Tags branch
+// @Accept json
+// @Produce  json
+// @Success 200
+// @Router /topsecret/order/66 [delete]
 func (controller) ExecuteOrder(w http.ResponseWriter, r *http.Request) {
 	serv.DeleteTransmitionData()
 	w.WriteHeader(http.StatusOK)

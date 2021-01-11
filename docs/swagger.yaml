@@ -1,0 +1,155 @@
+definitions:
+  entity.Position:
+    properties:
+      x:
+        type: number
+      "y":
+        type: number
+    type: object
+  entity.Satellite:
+    properties:
+      distance:
+        type: number
+      message:
+        items:
+          type: string
+        type: array
+      name:
+        type: string
+      position:
+        $ref: '#/definitions/entity.Position'
+    type: object
+  entity.TransmitionResponse:
+    properties:
+      message:
+        type: string
+      position:
+        $ref: '#/definitions/entity.Position'
+    type: object
+info:
+  contact:
+    email: miguell.beneditt@gmail.com
+    name: API Support
+  description: This api serves the Rebel Alliance by providing apis to recieve and
+    decode position and messages of alliance transmitions
+  title: Meli Challange Satellite API
+  version: "1.0"
+paths:
+  /topsecret/:
+    post:
+      consumes:
+      - application/json
+      description: returns the position and message of a given transmitter
+      operationId: post-batch
+      parameters:
+      - description: Satellite
+        in: body
+        name: branch
+        required: true
+        schema:
+          items:
+            $ref: '#/definitions/entity.Satellite'
+          type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.TransmitionResponse'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "404":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server error
+          schema:
+            type: string
+      summary: Process a Batch of incoming satellites transmitions update
+      tags:
+      - branch
+  /topsecret/order/66:
+    delete:
+      consumes:
+      - application/json
+      description: deletes all the distances and messages from the satellites, for
+        a fresh start.
+      operationId: execute-order
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+      summary: Executes the holy command to erase existing transmition
+      tags:
+      - branch
+  /topsecret_split/:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves the information of the satellites base on tu current
+        data
+      operationId: get-transmition
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.TransmitionResponse'
+        "404":
+          description: Not Found
+          schema:
+            type: string
+        "500":
+          description: Internal Server error
+          schema:
+            type: string
+      summary: Try to retrieve the position and message of the transmition
+      tags:
+      - branch
+  /topsecret_split/{satellite}:
+    post:
+      consumes:
+      - application/json
+      description: updates a Satellite transmition data base on the
+      operationId: post-satellite-message
+      parameters:
+      - description: Satellite Name
+        in: path
+        name: satellite
+        required: true
+        type: string
+      - description: Satellite
+        in: body
+        name: branch
+        required: true
+        schema:
+          items:
+            $ref: '#/definitions/entity.Satellite'
+          type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "404":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server error
+          schema:
+            type: string
+      summary: Updates a Satellite transmition data
+      tags:
+      - branch
+swagger: "2.0"

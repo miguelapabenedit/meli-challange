@@ -2,7 +2,6 @@ FROM golang:latest
 
 WORKDIR /app
 
-
 COPY go.mod ./go.mod  
 COPY go.sum ./go.sum 
 
@@ -11,7 +10,6 @@ COPY . .
 
 ENV PORT=5000
 
-RUN go build ./cmd/main.go
-
+RUN go build ./main.go
 
 CMD ["./main"]

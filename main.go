@@ -6,8 +6,11 @@ import (
 	"os"
 
 	"github.com/gorilla/mux"
+	"github.com/miguelapabenedit/meli-challange/docs"
+	_ "github.com/miguelapabenedit/meli-challange/docs"
 	"github.com/miguelapabenedit/meli-challange/pkg/controller"
 	"github.com/miguelapabenedit/meli-challange/pkg/service"
+	httpSwagger "github.com/swaggo/http-swagger"
 )
 
 var (
@@ -15,12 +18,22 @@ var (
 	port                string = os.Getenv("PORT")
 )
 
+// @title Meli Challange Satellite API
+// @version 1.0
+// @description This api serves the Rebel Alliance by providing apis to recieve and decode position and messages of alliance transmitions
+// @contact.name API Support
+// @contact.email miguell.beneditt@gmail.com
 func main() {
 	r := mux.NewRouter()
 	r.HandleFunc("/topsecret/", satelliteController.BatchPostSatellitesMessage).Methods(http.MethodPost)
 	r.HandleFunc("/topsecret_split/{satellite}", satelliteController.PostSatelliteMessage).Methods(http.MethodPost)
 	r.HandleFunc("/topsecret_split/", satelliteController.GetTransmition).Methods(http.MethodGet)
 	r.HandleFunc("/topsecret/order/66", satelliteController.ExecuteOrder).Methods(http.MethodDelete)
+
+	docs.SwaggerInfo.Host = "localhost:" + port
+	docs.SwaggerInfo.Schemes = []string{"http", "https"}
+	r.PathPrefix("/swagger").Handler(httpSwagger.WrapHandler)
+
 	log.Printf("Running up on port: %s", port)
 	log.Fatalln(http.ListenAndServe(":"+port, r))
 }
