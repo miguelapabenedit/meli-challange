@@ -37,7 +37,7 @@ http://localhost:8080/swagger/index.html
 
 ### Comentarios Generales
 
- Para el algoritmo de trilateración la teoría la saque de este articulo 
+ Para el algoritmo de trilateración la teoría la saque de wikipedia y si bien entendí el concepto me apoye en formulas agenas
  Para el algoritmo de Decode de mensaje, le falta contemplar :
   si un array de mensaje da información falsa
   contemplar defasajes en el final.
