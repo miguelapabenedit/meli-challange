@@ -8,6 +8,8 @@ COPY go.sum ./go.sum
 RUN go mod download
 COPY . .
 
+ENV HOST="meli-challange-demo.herokuapp.com"
+
 RUN go build ./main.go
 
 CMD ["./main"]

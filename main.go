@@ -16,6 +16,7 @@ import (
 var (
 	satelliteController        = controller.NewSatelliteController(service.NewSatelliteService())
 	port                string = os.Getenv("PORT")
+	host                string = os.Getenv("HOST")
 )
 
 // @title Meli Challange Satellite API
@@ -30,10 +31,10 @@ func main() {
 	r.HandleFunc("/topsecret_split/", satelliteController.GetTransmition).Methods(http.MethodGet)
 	r.HandleFunc("/topsecret/order/66", satelliteController.ExecuteOrder).Methods(http.MethodDelete)
 
-	docs.SwaggerInfo.Host = "localhost:" + port
-	docs.SwaggerInfo.Schemes = []string{"http", "https"}
+	docs.SwaggerInfo.Host = host + port
+	docs.SwaggerInfo.Schemes = []string{"https", "http"}
 	r.PathPrefix("/swagger").Handler(httpSwagger.WrapHandler)
 
-	log.Printf("Running up on port: %s", port)
-	log.Fatalln(http.ListenAndServe(":"+port, r))
+	log.Printf("Running up on host:%s port: %s", host, port)
+	log.Fatalln(http.ListenAndServe(port, r))
 }
